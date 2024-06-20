@@ -26,6 +26,14 @@ export const typeDefs = `#graphql
     authors:[Author]
     author(id:ID!):Author
   }
+  type Mutation{
+    deleteGame(id:ID!):[Game]
+    addGame(game:AddGameInput!):Game
+  }
+  input AddGameInput{
+    title:String!
+    platform:[String!]!
+  }
 `;
 
 //int,float,string,boolean,ID(key for objects)
@@ -57,6 +65,42 @@ query Q($id:ID!){
       rating,
       content
     }
+  }
+}
+
+query Q($id:ID!){
+  review(id:$id){
+    content,
+    rating
+    game {
+      title,
+      reviews {
+        rating
+      }
+    },
+    author {
+      name
+    }
+
+  }
+}
+
+---mutation
+mutation del($id:ID!){
+  deleteGame(id:$id){
+    title,platform,id
+  }
+}
+
+mutation add($game:AddGameInput!){
+  addGame(game:$game){
+    id,title,platform
+  }
+}
+{
+  "game": {
+    "title": "Fifa",
+    "platform":["Switch","PS5"]
   }
 }
 */
