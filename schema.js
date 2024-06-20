@@ -3,16 +3,20 @@ export const typeDefs = `#graphql
     id:ID! # ! rep required
     title:String!
     platform:[String!]! #array
+    reviews:[Review!]
   }
   type Review{
     id:ID!
     rating:String!
     content:String!
+    game:Game!
+    author:Author!
   }
   type Author{
     id:ID!
     name:String!
     verified:Boolean!
+    reviews:[Review!]
   }
   type Query{
     reviews:[Review]
@@ -44,5 +48,15 @@ review(id:$id){
 in variables section
 {
   "id": "1"
+}
+
+query Q($id:ID!){
+  game(id:$id){
+    title,
+    reviews {
+      rating,
+      content
+    }
+  }
 }
 */
